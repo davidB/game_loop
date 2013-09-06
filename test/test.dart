@@ -56,7 +56,7 @@ void render(GameLoopHtml gameLoop) {
   context.fillStyle = "rgb(255,0,0)";
   int posX = gameLoop.mouse.clampX == context.canvas.width ? gameLoop.mouse.clampX-1 : gameLoop.mouse.clampX;
   int posY = gameLoop.mouse.clampY == context.canvas.height ? gameLoop.mouse.clampY-1 : gameLoop.mouse.clampY;
-  context.fillRect(posX,posY,1,1);
+  context.fillRect(posX,posY,5, 5);
 }
 
 void resize(GameLoopHtml gameLoop) {
@@ -64,7 +64,7 @@ void resize(GameLoopHtml gameLoop) {
   int newWidth = window.innerWidth;
   int newHeight = window.innerHeight;
   num newWidthToHeight = newWidth / newHeight;
-  
+
   if (newWidthToHeight > widthToHeight) {
     newWidth = (newHeight * widthToHeight).floor();
     container.style.height = '${newHeight}px';
@@ -74,14 +74,14 @@ void resize(GameLoopHtml gameLoop) {
     container.style.width = '${newWidth}px';
     container.style.height = '${newHeight}px';
   }
-  
+
   int marginTop = (-newHeight / 2).floor();
   int marginLeft = (-newWidth / 2).floor();
   container.style.marginTop =  '${marginTop}px';
   container.style.marginLeft =  '${marginLeft}px';
-  
+
   canvas.width = newWidth;
-  canvas.height = newHeight;    
+  canvas.height = newHeight;
 }
 
 GameLoopTimer timer1;
