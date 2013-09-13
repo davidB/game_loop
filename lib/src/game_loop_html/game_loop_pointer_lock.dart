@@ -32,6 +32,10 @@ class PointerLock {
     gameLoop.element.requestPointerLock();
   }
 
+  void requestUnlock() {
+    if (locked) document.exitPointerLock();
+  }
+
   void _onClick(Event event) {
     if (lockOnClick) {
       requestLock();
