@@ -31,6 +31,11 @@ typedef void GameLoopResizeFunction(GameLoop gameLoop);
  */
 typedef void GameLoopFullscreenChangeFunction(GameLoop gameLoop);
 
+/** Called whenever the element moves between visibility and hidden
+ * mode.
+ */
+typedef void GameLoopVisibilityChangeFunction(GameLoop gameLoop);
+
 /** Called whenever the element moves between locking the pointer and
  * not locking the pointer.
  */
@@ -258,6 +263,13 @@ class GameLoopHtml extends GameLoop {
     onFullscreenChange(this);
   }
 
+  void _visibilityChange(Event _) {
+    if (onVisibilityChange == null) {
+      return;
+    }
+    onVisibilityChange(this);
+  }
+
   final List<_GameLoopTouchEvent> _touchEvents = new List<_GameLoopTouchEvent>();
   void _touchStartEvent(TouchEvent event) {
     _touchEvents.add(new _GameLoopTouchEvent(event, _GameLoopTouchEvent.Start));
@@ -310,6 +322,7 @@ class GameLoopHtml extends GameLoop {
     if (_initialized == false) {
       document.onFullscreenError.listen(_fullscreenError);
       document.onFullscreenChange.listen(_fullscreenChange);
+      document.onVisibilityChange.listen(_visibilityChange);
       element.onTouchStart.listen(_touchStartEvent);
       element.onTouchEnd.listen(_touchEndEvent);
       element.onTouchCancel.listen(_touchEndEvent);
@@ -359,6 +372,14 @@ class GameLoopHtml extends GameLoop {
   GameLoopResizeFunction onResize;
   /** Called when element enters or exits fullscreen mode. */
   GameLoopFullscreenChangeFunction onFullscreenChange;
+  /**
+   * Called when element enters or exits visibility mode.
+   *
+   *     gameLoop.onVisibilityChange = (gameLoop){
+   *       if (!gameLoop.isVisible) _pause();
+   *     };
+   */
+  GameLoopFullscreenChangeFunction onVisibilityChange;
   /** Called when the element moves between owning and not
    *  owning the pointer.
    */
